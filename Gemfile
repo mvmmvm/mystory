@@ -53,6 +53,7 @@ gem "ruby-openai"
 gem 'turbo-rails'
 
 group :development, :test do
+  gem 'sqlite3', '~> 1.4'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
@@ -73,4 +74,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+end
+
+group :production do
+  gem "pg", "~> 1.4"
 end
