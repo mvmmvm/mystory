@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  story: one
+  character: one
+  points: 1
+
+two:
+  story: two
+  character: two
+  points: 1

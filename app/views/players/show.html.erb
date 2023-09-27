@@ -1,0 +1,24 @@
+<%= @character.story.set %><br>
+<%= @character.story.weapon %><br>
+<%= @character.story.place %><br>
+<%= @character.story.time %><br>
+<%= @character.story.victim %><br>
+<%= @character.story.v_gender %><br>
+<%= @character.story.v_personality %><br>
+<%= @character.story.v_job %><br><br>
+
+<% if @character.is_criminal %>
+    <%= "あなたが犯人です" %>
+<% else %>
+    <%= "犯人ではありません" %>
+<% end %><br>
+
+<%= @character.name %><br>
+<%= @character.gender %><br>
+<%= @character.personality %><br>
+<%= @character.job %><br>
+<%= @character.introduce %><br>
+<%= @character.secret %><br>
+<%= @character.stuff %><br>
+<%= @character.evidence %><br>
+<%= @character.reason %><br>
