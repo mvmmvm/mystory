@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_163945) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_28_083812) do
   create_table "characters", force: :cascade do |t|
     t.integer "story_id", null: false
     t.string "name"
@@ -48,6 +48,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_163945) do
     t.index ["room_id"], name: "index_players_on_room_id"
   end
 
+  create_table "queries", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "story_id"
     t.integer "character_id"
@@ -72,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_163945) do
     t.string "all"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "confession"
   end
 
   add_foreign_key "characters", "stories"

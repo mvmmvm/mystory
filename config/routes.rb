@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   get 'rooms/:id/chats', to: "rooms#chats"
   resources :stories
+  get "hoge/:id", to: "stories#hoge"
 
   resources :rooms do
     resources :characters
