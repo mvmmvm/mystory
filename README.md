@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ■サービス概要
 ユーザーが名前（三人分）を入力し、生成ボタンを押すと手軽なマーダーミステリーが作成されるサービスです。
 生成後、各ユーザーは自分の名前が表示されているページで役割と情報を元にディスカッションし、犯人を当てるか、犯人以外の秘密を当てます。
@@ -51,3 +52,7 @@
 「機能候補」において※の付いているものはMVPの範囲に確実に入れようと思っています。
 あとはUIについて詳しくないので、画面遷移自体は確定的ですが、フロントエンドデザインについては
 ほぼ定まっていません。
+=======
+### 画面遷移図
+Figma：https://www.figma.com/file/eWBmUHClXYpwZpgkLUS1tm/MyStoryScreenTransitionDiagram?type=design&node-id=0%3A1&mode=design&t=GIYAehHjQlck7rYt-1
+>>>>>>> Stashed changes
