@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_28_083812) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_07_063236) do
   create_table "characters", force: :cascade do |t|
     t.integer "story_id", null: false
     t.string "name"
@@ -18,7 +18,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_083812) do
     t.string "personality"
     t.string "job"
     t.string "introduce"
-    t.string "secret"
     t.string "evidence"
     t.boolean "is_criminal"
     t.datetime "created_at", null: false
@@ -79,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_28_083812) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "confession"
+    t.string "c_stuff"
   end
 
   add_foreign_key "characters", "stories"

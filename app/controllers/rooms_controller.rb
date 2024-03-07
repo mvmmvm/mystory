@@ -68,21 +68,22 @@ class RoomsController < ApplicationController
 
         1.times do
             @chats = request_gpt([name1, name2, name3], [gender1, gender2, gender3])
+            p @chats
 
-            @set =  validate(@chats.match(/舞台(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @body = validate(@chats.match(/事件のストーリー(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m) , 2)
-            @weapon = validate(@chats.match(/凶器(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m) , 2)
-            @place = validate(@chats.match(/犯行場所(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @time = validate(@chats.match(/犯行時刻(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @victim = validate(@chats.match(/被害者の名前(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @v_gender =  validate(@chats.match(/高橋信夫の性別(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @v_personality =  validate(@chats.match(/高橋信夫の性格(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @v_job = validate(@chats.match(/高橋信夫の職業(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @criminal = validate(@chats.match(/(人物(1|１)|#{name1})、(人物(2|２)|#{name2})、(人物(3|３)|#{name3})のうち#{@victim}.+犯人は誰ですか(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 8)
-            @confession = validate(@chats.match(/その人物が高橋信夫を殺害した理由について独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:)|$)/m), 2)
+            @set =  validate(@chats.match(/舞台(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @body = validate(@chats.match(/事件のストーリー(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m) , 2)
+            @weapon = validate(@chats.match(/凶器(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m) , 2)
+            @place = validate(@chats.match(/犯行場所(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @time = validate(@chats.match(/犯行時刻(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @victim = validate(@chats.match(/被害者の名前(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @v_gender =  validate(@chats.match(/高橋信夫の性別(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @v_personality =  validate(@chats.match(/高橋信夫の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @v_job = validate(@chats.match(/高橋信夫の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+            @criminal = validate(@chats.match(/(人物(1|１)|#{name1})、(人物(2|２)|#{name2})、(人物(3|３)|#{name3})のうち#{@victim}.+犯人.+?(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 8)
+            @confession = validate(@chats.match(/その人物が高橋信夫を殺害した理由をその人物の秘密の内容に強く関連させて独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:)|$)/m), 2)
             main_part = [@chats, @set, @body, @weapon, @place, @time, @victim, @v_gender, @v_personality, @v_job, @criminal, @confession]
 
-            if main_part.any? { |要素| 要素.nil? }
+            if main_part.any? { |content| content.nil? }
                 error_count += 1
                 p "including nil."
                 next
@@ -111,22 +112,20 @@ class RoomsController < ApplicationController
                 [name1, name2, name3].each_with_index do |name, count|
                     count += 1
                     fw_count = count.to_s.tr("A-Z0-9","Ａ-Ｚ０-９")
-                    @gender = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性別(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @personality =  validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性格(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @job = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の職業(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @introduce = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})のここにいる理由と.+?自身の秘密の内容と.+?秘密を隠すため.+?事件直前に取った行動を独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    # @secret = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の秘密の種類(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @stuff = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の秘密の証拠品(：|:|は)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @gender = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性別(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @personality =  validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @job = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @introduce = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})のここにいる理由と自身の秘密の内容と事件直前に取った行動を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @stuff = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の秘密の証拠品(：|:|は)?\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
                     @evidence = [
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(１|1)を独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(２|2)を独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(３|3)を独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5)
+                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(１|1)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
+                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(２|2)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
+                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(３|3)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5)
                     ]
-                    @reason = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の行動が他の人物から.+?独白させてください(：|:)((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
 
-                    character_part = [@gender, @personality, @job, @introduce, @secret, @stuff, @evidence]
+                    character_part = [@gender, @personality, @job, @introduce, @stuff, @evidence]
 
-                    if character_part.any? { |要素| 要素.nil? }
+                    if character_part.any? { |content| content.nil? }
                         character_error = true
                         break
                     end
@@ -152,7 +151,6 @@ class RoomsController < ApplicationController
                         personality: @personality,
                         job: @job,
                         introduce: @introduce,
-                        # secret: @secret,
                         stuff: @stuff,
                         evidence: @evidence,
                         reason: @reason,
@@ -183,9 +181,10 @@ class RoomsController < ApplicationController
     def request_gpt(names, genders)
 
         @client = OpenAI::Client.new(
-            access_token: "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",
+            access_token: "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",
             request_timeout: 600
         )
+        p @client
         joined_names = names.join("、")
 
         main_str =
@@ -197,11 +196,11 @@ class RoomsController < ApplicationController
             "人物同士での共謀・協力はさせないでください。"\
             "人物たちは自分以外の人物の行動について1つ以上知っていることがあります。"\
             "秘密の証拠品には人物たちの名前を出さないでください。"\
-            "秘密の内容と秘密の証拠品は強く関連させてください"\
+            "人物の秘密の内容と秘密の証拠品は強く関連させてください。"\
             "秘密の証拠品は必ず設定し、重複させないでください。"\
             "人物たちに、事件前後、他の人物の持つ秘密に関係する情報を知る機会はなかったことにしてください。"\
             "職業に警察官、刑事、探偵を設定しないでください。"\
-            "人物たちの秘密の内容の種類は下記から1つ選びすべて別々のものにしてください。"\
+            "人物たちの秘密の内容は下記から1つ選びすべて別々のものにしてください。"\
             "恋愛/病気や健康状態/職場でのトラブル/逮捕歴/同性愛/薬物やアルコールの依存/不倫/身体的な制約/過去の仕事やキャリア/自己の能力やスキルに関する不安/被害経験（いじめ、虐待、暴力など）/過去の自殺未遂/逮捕歴/学業成績/反社会的なグループや組織への所属/身体的な制約やハンディキャップ/精神的な障害や病気/薬物の使用経験/自身の過去のトラウマ/プライベートな写真や動画/過去の仕事の失敗/学歴/秘密のプロジェクトや計画/自身の身体的な問題/他人からの評価や批判/借金/学校や職場での評価/自己の過去の失敗や過ち\n\n"\
             "[設定]\n"\
             "事件の舞台:\n"\
@@ -222,7 +221,7 @@ class RoomsController < ApplicationController
                 "#{name}の性別:#{gender}\n"\
                 "#{name}の性格:\n"\
                 "#{name}の職業:\n"\
-                "#{name}のここにいる理由と自身の秘密の内容と自身の秘密の内容を隠すため事件直前に取った行動を独白させてください:「」\n"\
+                "#{name}のここにいる理由と自身の秘密の内容と事件直前に取った行動を独白させてください:「」\n"\
                 "#{name}の秘密の証拠品:\n"\
                 "#{name}が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること1を独白させてください:「」\n"\
                 "#{name}が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること2を独白させてください:「」\n"\
@@ -247,11 +246,13 @@ class RoomsController < ApplicationController
             ],
             model: "gpt-3.5-turbo-16k",
             presence_penalty: 0,
-            temperature: 0.7,
+            temperature: 1,
             top_p: 1
         })
+        p response
 
         @chats = response.dig("choices", 0, "message", "content")
+
     end
 
 end
