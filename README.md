@@ -36,9 +36,9 @@ Figma：https://www.figma.com/file/eWBmUHClXYpwZpgkLUS1tm/MyStoryScreenTransitio
 自動生成のため何度でも遊べて、webサービスのため場所を取らず、場所を選ばず、リアルタイムでも、通話中でも楽しめる（チャット機能も作りたい）
 
 ■機能候補
-* ストーリー生成登録機能（非同期）feat.OpenAI ChatGPT API ※
+* ストーリー・キャラクター生成登録機能（非同期）feat.OpenAI ChatGPT API ※
 * ストーリー一覧機能 ※
-* プレイヤー＆ルーム登録機能 *
+* プレイヤー・ルーム登録機能 *
 * プレイヤー一覧機能 *
 * プレイヤー詳細機能 ※
 * 回答機能 ※
