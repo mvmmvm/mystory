@@ -1,6 +1,8 @@
+# デバッグのため、"p"表示は残す
+
 class RoomsController < ApplicationController
     def create
-        @room = Room.create(story: Story.new, character: Character.new)
+        @room = Room.create(story: Story.new)
         redirect_to room_path(@room)
     end
 
@@ -153,7 +155,6 @@ class RoomsController < ApplicationController
                         introduce: @introduce,
                         stuff: @stuff,
                         evidence: @evidence,
-                        reason: @reason,
                         is_criminal: @is_criminal
                     )
                     Player.create(
@@ -181,7 +182,7 @@ class RoomsController < ApplicationController
     def request_gpt(names, genders)
 
         @client = OpenAI::Client.new(
-            access_token: "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",
+            access_token: ENV['ACCESS_TOKEN'],
             request_timeout: 600
         )
         p @client

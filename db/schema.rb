@@ -10,63 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_07_063236) do
-  create_table "characters", force: :cascade do |t|
-    t.integer "story_id", null: false
+ActiveRecord::Schema[7.0].define(version: 2023_09_24_044040) do
+  create_table "characters", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "story_id", null: false
     t.string "name"
     t.string "gender"
-    t.string "personality"
+    t.text "personality"
     t.string "job"
-    t.string "introduce"
-    t.string "evidence"
+    t.text "introduce"
+    t.string "stuff"
+    t.text "evidence"
     t.boolean "is_criminal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "person_id"
-    t.string "reason"
-    t.string "stuff"
     t.index ["story_id"], name: "index_characters_on_story_id"
   end
 
-  create_table "evidences", force: :cascade do |t|
-    t.integer "character_id", null: false
-    t.string "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["character_id"], name: "index_evidences_on_character_id"
-  end
-
-  create_table "players", force: :cascade do |t|
-    t.integer "room_id", null: false
-    t.integer "character_id", null: false
+  create_table "players", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "character_id", null: false
     t.string "name"
-    t.integer "point"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["character_id"], name: "index_players_on_character_id"
     t.index ["room_id"], name: "index_players_on_room_id"
   end
 
-  create_table "queries", force: :cascade do |t|
-    t.string "content"
+  create_table "rooms", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "story_id"
+    t.boolean "solved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "rooms", force: :cascade do |t|
-    t.integer "story_id"
-    t.integer "character_id"
-    t.integer "points"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["character_id"], name: "index_rooms_on_character_id"
     t.index ["story_id"], name: "index_rooms_on_story_id"
   end
 
-  create_table "stories", force: :cascade do |t|
+  create_table "stories", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "set"
-    t.string "body"
+    t.text "body"
     t.string "weapon"
     t.string "place"
     t.string "time"
@@ -74,17 +55,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_07_063236) do
     t.string "v_gender"
     t.string "v_personality"
     t.string "v_job"
-    t.string "all"
+    t.text "confession"
+    t.text "all"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "confession"
-    t.string "c_stuff"
   end
 
   add_foreign_key "characters", "stories"
-  add_foreign_key "evidences", "characters"
   add_foreign_key "players", "characters"
   add_foreign_key "players", "rooms"
-  add_foreign_key "rooms", "characters"
   add_foreign_key "rooms", "stories"
 end
