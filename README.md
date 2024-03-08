@@ -1,6 +1,9 @@
 ### 画面遷移図
 Figma：https://www.figma.com/file/eWBmUHClXYpwZpgkLUS1tm/MyStoryScreenTransitionDiagram?type=design&node-id=0%3A1&mode=design&t=GIYAehHjQlck7rYt-1
 
+### ER図
+https://drive.google.com/file/d/1XLFnNdyAmHqlE9-l6-ipyPVm7pcgqEVe/view?usp=sharing
+
 ■サービス概要
 ユーザーが名前（三人分）を入力し、生成ボタンを押すと手軽なマーダーミステリーが作成されるサービスです。
 生成後、各ユーザーは自分の名前が表示されているページで役割と情報を元にディスカッションし、犯人を当てるか、犯人はあてられないようにします。
