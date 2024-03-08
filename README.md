@@ -4,6 +4,24 @@ Figma：https://www.figma.com/file/eWBmUHClXYpwZpgkLUS1tm/MyStoryScreenTransitio
 ### ER図
 https://drive.google.com/file/d/1XLFnNdyAmHqlE9-l6-ipyPVm7pcgqEVe/view?usp=sharing
 
+### 環境構築方法
+
+1. 初回のみ管理者に.envファイルを共有してもらい、プロジェクト直下に入れて下さい。
+
+2. 下記のコマンドを打ちます。
+```
+docker compose up -d
+```
+- 初回のみ
+```
+rails db:create
+```
+- 初回・マイグレーション（DB変更）時
+- マイグレーションの際は、一旦schema.rbを削除すること
+```
+rails db:migrate
+```
+
 ■サービス概要
 ユーザーが名前（三人分）を入力し、生成ボタンを押すと手軽なマーダーミステリーが作成されるサービスです。
 生成後、各ユーザーは自分の名前が表示されているページで役割と情報を元にディスカッションし、犯人を当てるか、犯人はあてられないようにします。

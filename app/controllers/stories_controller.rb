@@ -1,3 +1,5 @@
+# デバッグのため、"p"表示は残す
+
 class StoriesController < ApplicationController
     def index
         @stories = Story.all
@@ -29,8 +31,6 @@ class StoriesController < ApplicationController
         v_personality =  validate(story.match(/高橋信夫の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
         v_job = validate(story.match(/高橋信夫の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
         criminal = validate(story.match(/(人物(1|１)|佐藤佑樹)、(人物(2|２)|御堂拡)、(人物(3|３)|浄明寺遥)のうち#{victim}.+犯人.+?(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 8)
-        p "(人物(1|１)|佐藤佑樹)、(人物(2|２)|御堂拡)、(人物(3|３)|浄明寺遥)のうち#{victim}.+犯人は誰ですか(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))"
-
         confession = validate(story.match(/その人物が#{victim}を殺害した理由.+独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:)|$)/m), 2)
 
         story_model.update(

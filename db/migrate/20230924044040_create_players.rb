@@ -4,8 +4,6 @@ class CreatePlayers < ActiveRecord::Migration[7.0]
       t.references :room, null: false, foreign_key: true
       t.references :character, null: false, foreign_key: true
       t.string :name
-      t.integer :point
-
       t.timestamps
     end
   end

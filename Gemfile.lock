@@ -88,6 +88,10 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (3.1.0)
+    dotenv-rails (3.1.0)
+      dotenv (= 3.1.0)
+      railties (>= 6.1)
     erubi (1.12.0)
     faraday (2.7.11)
       base64
@@ -126,6 +130,7 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     multipart-post (2.3.0)
+    mysql2 (0.5.6)
     net-imap (0.3.7)
       date
       net-protocol
@@ -200,8 +205,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.6)
-      mini_portile2 (~> 2.8.0)
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
@@ -231,6 +234,7 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
+  aarch64-linux
   arm64-darwin-22
   arm64-darwin-23
   x86_64-linux
@@ -239,15 +243,16 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  dotenv-rails
   importmap-rails
   jbuilder
+  mysql2
   pg (~> 1.4)
   puma (~> 5.0)
   rails (~> 7.0.4)
   ruby-openai
   selenium-webdriver
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
   tzinfo-data

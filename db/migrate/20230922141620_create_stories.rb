@@ -3,7 +3,7 @@ class CreateStories < ActiveRecord::Migration[7.0]
     create_table :stories do |t|
       t.string :name
       t.string :set
-      t.string :body
+      t.text :body
       t.string :weapon
       t.string :place
       t.string :time
@@ -11,8 +11,8 @@ class CreateStories < ActiveRecord::Migration[7.0]
       t.string :v_gender
       t.string :v_personality
       t.string :v_job
-      t.string :all
-
+      t.text :confession
+      t.text :all
       t.timestamps
     end
   end
