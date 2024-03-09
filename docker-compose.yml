@@ -1,31 +1,29 @@
 version: '3'
 services:
   db:
-    image: mysql:5.7
-    platform: linux/x86_64
+    image: postgres:16
     ports:
       - 3306:3306
     volumes:
-      - mysql_data:/var/lib/mysql
+      - pg_data:/var/lib/postgresql/data
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      TZ: 'Asia/Tokyo' 
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
   web:
-    image: ruby:3.3.0
+    build:
+      context: .
+      dockerfile: Dockerfile.local
     tty: true
     ports:
       - "3000:3000"
     command: >
-      bash -c "apt-get update -qq && apt-get install -y build-essential libpq-dev default-mysql-client &&
-      bundle install &&
-      rm -f tmp/pids/server.pid &&
+      bash -c "rm -f tmp/pids/server.pid &&
       bundle exec rails s -p 3000 -b '0.0.0.0'"
-    working_dir: /mystory
     volumes: 
-      - .:/mystory
+      - .:/app
       - bundle:/usr/local/bundle
     depends_on:
       - db
 volumes:
-  mysql_data:
+  pg_data:
   bundle:

@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_24_044040) do
-  create_table "characters", charset: "utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "characters", force: :cascade do |t|
     t.bigint "story_id", null: false
     t.string "name"
     t.string "gender"
@@ -19,14 +22,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_044040) do
     t.string "job"
     t.text "introduce"
     t.string "stuff"
-    t.text "evidence"
+    t.text "evidence", array: true
     t.boolean "is_criminal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["story_id"], name: "index_characters_on_story_id"
   end
 
-  create_table "players", charset: "utf8mb4", force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.bigint "room_id", null: false
     t.bigint "character_id", null: false
     t.string "name"
@@ -36,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_044040) do
     t.index ["room_id"], name: "index_players_on_room_id"
   end
 
-  create_table "rooms", charset: "utf8mb4", force: :cascade do |t|
+  create_table "rooms", force: :cascade do |t|
     t.bigint "story_id"
     t.boolean "solved"
     t.datetime "created_at", null: false
@@ -44,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_24_044040) do
     t.index ["story_id"], name: "index_rooms_on_story_id"
   end
 
-  create_table "stories", charset: "utf8mb4", force: :cascade do |t|
+  create_table "stories", force: :cascade do |t|
     t.string "name"
     t.string "set"
     t.text "body"
