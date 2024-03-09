@@ -7,12 +7,14 @@ https://drive.google.com/file/d/1XLFnNdyAmHqlE9-l6-ipyPVm7pcgqEVe/view?usp=shari
 ### 環境構築方法
 
 1. 初回のみ管理者に.envファイルを共有してもらい、プロジェクト直下に入れて下さい。
-
 2. 下記のコマンドを打ちます。
 ```
-docker compose up -d
+docker compose up --build -d
 ```
 - 初回のみ
+```
+docker compose exec web bash
+```
 ```
 rails db:create
 ```
@@ -21,6 +23,36 @@ rails db:create
 ```
 rails db:migrate
 ```
+
+
+### デプロイ方法
+1. 事前準備として下記いずれかの方法でflyctlをインストールしておきます。
+- macOS
+```
+brew install flyctl
+```
+```
+curl -L https://fly.io/install.sh | sh
+```
+- Linux
+```
+curl -L https://fly.io/install.sh | sh
+```
+- Windows
+```
+pwsh -Command "iwr https://fly.io/install.ps1 -useb | iex"
+```
+
+
+2. トークンを管理者から教えてもらい下記のコマンドを打ちます。
+```
+fly auth login -t [トークン]
+```
+3. デプロイします。
+ ```
+fly deploy
+ ```
+
 
 ■サービス概要
 ユーザーが名前（三人分）を入力し、生成ボタンを押すと手軽なマーダーミステリーが作成されるサービスです。
