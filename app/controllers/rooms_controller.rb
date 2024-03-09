@@ -81,7 +81,7 @@ class RoomsController < ApplicationController
             @v_gender =  validate(@chats.match(/高橋信夫の性別(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
             @v_personality =  validate(@chats.match(/高橋信夫の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
             @v_job = validate(@chats.match(/高橋信夫の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
-            @criminal = validate(@chats.match(/(人物(1|１)|#{name1})、(人物(2|２)|#{name2})、(人物(3|３)|#{name3})のうち#{@victim}.+犯人.+?(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 8)
+            @criminal = validate(@chats.match(/#{name1}、#{name2}、#{name3}のうち#{@victim}.+犯人.+?(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
             @confession = validate(@chats.match(/その人物が高橋信夫を殺害した理由をその人物の秘密の内容に強く関連させて独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:)|$)/m), 2)
             main_part = [@chats, @set, @body, @weapon, @place, @time, @victim, @v_gender, @v_personality, @v_job, @criminal, @confession]
 
@@ -114,15 +114,15 @@ class RoomsController < ApplicationController
                 [name1, name2, name3].each_with_index do |name, count|
                     count += 1
                     fw_count = count.to_s.tr("A-Z0-9","Ａ-Ｚ０-９")
-                    @gender = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性別(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @personality =  validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @job = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @introduce = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})のここにいる理由と自身の秘密の内容と事件直前に取った行動を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
-                    @stuff = validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})の秘密の証拠品(：|:|は)?\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 4)
+                    @gender = validate(@chats.match(/#{name}の性別(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+                    @personality =  validate(@chats.match(/#{name}の性格(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+                    @job = validate(@chats.match(/#{name}の職業(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+                    @introduce = validate(@chats.match(/#{name}のここにいる理由と自身の秘密の内容と事件直前に取った行動を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
+                    @stuff = validate(@chats.match(/#{name}の秘密の証拠品(：|:|は)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 2)
                     @evidence = [
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(１|1)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(２|2)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5),
-                        validate(@chats.match(/(人物(#{fw_count}|#{count})|#{name})が事件後に他の人物に聞いたり現場を調べてわかった.+(３|3)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 5)
+                        validate(@chats.match(/#{name}が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(１|1)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 3),
+                        validate(@chats.match(/#{name}が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(２|2)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 3),
+                        validate(@chats.match(/#{name}が事件後に他の人物に聞いたり現場を調べてわかったことか他の人物の行動に関すること(３|3)を独白させてください(：|:)\s?((?:.|\s)+?)(?=\s[^(：|:)\s]+(：|:))/m), 3)
                     ]
 
                     character_part = [@gender, @personality, @job, @introduce, @stuff, @evidence]
