@@ -9,21 +9,25 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-  web:
+      TZ: Asia/Tokyo
+  backend:
     build:
-      context: .
+      context: ./backend/
       dockerfile: Dockerfile.local
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     tty: true
     ports:
-      - "3000:3000"
-    command: >
-      bash -c "rm -f tmp/pids/server.pid &&
-      bundle exec rails s -p 3000 -b '0.0.0.0'"
+      - '3000:3000'
     volumes: 
-      - .:/app
-      - bundle:/usr/local/bundle
-    depends_on:
-      - db
+      - ./backend:/app
+  frontend: 
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile.local
+    volumes:
+      - ./frontend:/app
+    command: 'yarn dev'
+    ports:
+      - "8080:3000"
 volumes:
   pg_data:
-  bundle:
