@@ -1,7 +1,5 @@
-:::note warn
-https://github.com/mvmmvm/mymys
-へ移動しました
-:::
+> [!WARNING]
+> [Urgent info that needs immediate user attention to avoid problems.](https://github.com/mvmmvm/mymys)へ移動しました
 
 ### 画面遷移図
 Figma：https://www.figma.com/file/eWBmUHClXYpwZpgkLUS1tm/MyStoryScreenTransitionDiagram?type=design&node-id=0%3A1&mode=design&t=GIYAehHjQlck7rYt-1
